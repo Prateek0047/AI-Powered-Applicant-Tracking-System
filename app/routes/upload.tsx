@@ -1,10 +1,15 @@
+import { prepareInstructions } from "constants";
 import React, { useEffect, useState, type FormEvent } from "react";
+import { useNavigate } from "react-router";
 import FileUploader from "~/Components/FileUploader";
 import Navbar from "~/Components/Navbar";
+import { convertPdfToImage } from "~/lib/pdf2img";
 import { usePuterStore } from "~/lib/puter";
+import { generateUUID } from "~/lib/utils";
 
 function upload() {
-    const {auth,isLoading,fs,ai,kv} = usePuterStore();
+  const { auth, isLoading, fs, ai, kv } = usePuterStore();
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setstatusText] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -25,7 +30,50 @@ function upload() {
   }) => {
     setIsProcessing(true);
     setstatusText("uploading the file");
-     const uploadedFile=await fs.upload([file]);
+    const uploadedFile = await fs.upload([file]);
+    if (!uploadedFile) return setstatusText("Error: Failed to upload file");
+    setstatusText("uploading the file.....");
+    const imageFile = await convertPdfToImage(file);
+
+    if (!imageFile.file)
+      return setstatusText("Error : Failed to convert PDF to image");
+
+    setstatusText("uploading the image");
+    const uploadedImage = await fs.upload([imageFile.file]);
+    if (!uploadedImage) return setstatusText("Error : Failed to upload image");
+
+    setstatusText("Preparing data....");
+
+    const uuid = generateUUID();
+
+    const data = {
+      id: uuid,
+      resumePath: uploadedFile.path,
+      imagePath: uploadedImage.path,
+      companyName,
+      jobDescription,
+      jobTitle,
+      feedback: "",
+    };
+    await kv.set(`resume:${uuid}`, JSON.stringify(data));
+
+    setstatusText("Analysing ....");
+
+    const feedback = await ai.feedback(
+      uploadedFile.path,
+      prepareInstructions({ jobTitle, jobDescription })
+    );
+
+    if (!feedback) return setstatusText("Error : Failed to analyse resume");
+
+    const feedbackText =
+      typeof feedback.message.content === "string"
+        ? feedback.message.content
+        : feedback.message.content[0].text;
+    data.feedback = JSON.parse(feedbackText);
+    await kv.set(`resume:${uuid}`, JSON.stringify(data));
+    setstatusText("Analyse complete.... redirecting ....");
+    console.log(data);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -50,10 +98,14 @@ function upload() {
             Smart feedback for your <br /> dream job{" "}
           </h1>
           {isProcessing ? (
-            <>
-              <h2>{statusText}</h2>
-              <img src="/images/resume-scan.gif" className="w-full" alt="img" />
-            </>
+            <div className="flex flex-col items-center gap-1">
+              <h2 className="m-0">{statusText}</h2>
+              <img
+                src="/images/resume-scan.gif"
+                className="w-full max-w-md "
+                alt="img"
+              />
+            </div>
           ) : (
             <h2>Drop your resume for ATS score and improvement tips</h2>
           )}

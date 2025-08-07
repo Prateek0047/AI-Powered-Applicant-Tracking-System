@@ -19,7 +19,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
     useDropzone({
       onDrop,
       multiple: false,
-      maxSize: 20 * 1024 * 1024,
+      maxSize: maxFileSize,
       accept: { "application/pdf": [".pdf"] },
     });
 
@@ -57,7 +57,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
             </div>
           ) : (
             <div>
-              <div className="mx-auto w-16 flex items-center justify-center mb-2">
+              <div className="mx-auto h-16 w-16 flex items-center justify-center mb-2">
                 <img src="/icons/info.svg" alt="upload" className="size-20" />
               </div>
               <p className="text-lg text-gray-500">
