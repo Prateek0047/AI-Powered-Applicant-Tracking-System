@@ -7,7 +7,7 @@ import { convertPdfToImage } from "~/lib/pdf2img";
 import { usePuterStore } from "~/lib/puter";
 import { generateUUID } from "~/lib/utils";
 
-function upload() {
+function Upload() {
   const { auth, isLoading, fs, ai, kv } = usePuterStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -74,6 +74,7 @@ function upload() {
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setstatusText("Analyse complete.... redirecting ....");
     console.log(data);
+    navigate(`/resume/${uuid}`);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -165,4 +166,4 @@ function upload() {
   );
 }
 
-export default upload;
+export default Upload;

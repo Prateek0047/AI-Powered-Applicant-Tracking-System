@@ -6,9 +6,11 @@ interface FileUploaderProps {
 }
 
 const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0] || null;
+      setSelectedFile(file);
       onFileSelect?.(file);
     },
     [onFileSelect]
@@ -23,7 +25,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
       accept: { "application/pdf": [".pdf"] },
     });
 
-  const file = acceptedFiles[0] || null;
+  const file = selectedFile;
 
   return (
     <div className="w-full gradient-border">
@@ -49,6 +51,7 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
               <button
                 className="p-2 cursor-pointer"
                 onClick={(e) => {
+                  setSelectedFile(null);
                   onFileSelect?.(null);
                 }}
               >
