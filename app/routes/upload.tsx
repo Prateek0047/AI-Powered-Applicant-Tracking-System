@@ -1,4 +1,4 @@
-import { prepareInstructions } from "constants";
+import { prepareInstructions } from "../../constants";
 import React, { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import FileUploader from "~/components/FileUploader";
@@ -13,6 +13,7 @@ function Upload() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setstatusText] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
   const handleFileSelect = (file: File | null) => {
     setFile(file);
   };
@@ -51,8 +52,8 @@ function Upload() {
       resumePath: uploadedFile.path,
       imagePath: uploadedImage.path,
       companyName,
-      jobDescription,
       jobTitle,
+      jobDescription,
       feedback: "",
     };
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
@@ -70,6 +71,7 @@ function Upload() {
       typeof feedback.message.content === "string"
         ? feedback.message.content
         : feedback.message.content[0].text;
+
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setstatusText("Analyse complete.... redirecting ....");
@@ -88,7 +90,7 @@ function Upload() {
 
     if (!file) return;
 
-    handleAnalyse({ companyName, jobDescription, jobTitle, file });
+    handleAnalyse({ companyName, jobTitle, jobDescription, file });
   };
   return (
     <main className="bg-[url('/images/bg-main.svg')] bg-cover">
