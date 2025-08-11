@@ -1,58 +1,65 @@
 import { usePuterStore } from "~/lib/puter";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
+import Navbar from "~/components/Navbar";
 
 export const meta = () => [
-  { title: "Resumind | Auth" },
+  { title: "Koala | Auth" },
   { name: "description", content: "Log into your account" },
 ];
 
 const Auth = () => {
   const { isLoading, auth } = usePuterStore();
   const location = useLocation();
-  const next = location.search.split("next=")[1];
+  const next = new URLSearchParams(location.search).get("next") || "/";
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth.isAuthenticated) navigate(next);
-  }, [auth.isAuthenticated, next]);
+    if (auth.isAuthenticated) {
+      navigate(next);
+    }
+  }, [auth.isAuthenticated, next, navigate]);
 
   return (
-    <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-screen flex items-center justify-center">
-      <div className="gradient-border shadow-lg">
-        <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1>Welcome</h1>
-            <h2>Log In to Continue Your Job Journey</h2>
-          </div>
-          <div>
+    <div className="relative bg-[#060707] min-h-screen">
+      <Navbar />
+      <div className="bg-[#15d98bfd] h-[362px] w-[362px] absolute rounded-full blur-[120px] filter -top-[100px] -left-20 opacity-75 -z-10"></div>
+      <main className="min-h-[80vh] flex items-center justify-center">
+        <div className="max-w-xl relative text-center">
+          <h1 className="font-IBMPlexBold text-6xl max-w-md mx-auto text-center uppercase">
+            Welcome Back
+          </h1>
+          <p className="font-IBMPlexRegular text-center mt-4 mb-8 text-gray-400">
+            Log In to continue your Job journey
+          </p>
+          <div className="flex justify-center">
             {isLoading ? (
-              <button className="btn btn-soft btn-accent animate-pulse w-full">
-                <p>Signing you in...</p>
+              <button className="bg-[#02C173] text-white font-IBMPlexBold py-3 px-8 rounded-lg opacity-50 cursor-not-allowed">
+                Signing you in...
               </button>
             ) : (
               <>
                 {auth.isAuthenticated ? (
                   <button
-                    className="btn btn-soft btn-error w-full"
+                    className="bg-red-500 text-white font-IBMPlexBold py-3 px-8 rounded-lg hover:bg-opacity-80 transition-all"
                     onClick={auth.signOut}
                   >
-                    <p>Log Out</p>
+                    Log Out
                   </button>
                 ) : (
                   <button
-                    className="btn btn-soft btn-accent w-full"
+                    className="bg-[#02C173] text-white font-IBMPlexBold py-3 px-8 rounded-lg hover:bg-opacity-80 transition-all"
                     onClick={auth.signIn}
                   >
-                    <p>Log In</p>
+                    Log In/Sign UP with Puter
                   </button>
                 )}
               </>
             )}
           </div>
-        </section>
-      </div>
-    </main>
+        </div>
+      </main>
+    </div>
   );
 };
 

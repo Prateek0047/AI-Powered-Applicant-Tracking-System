@@ -93,28 +93,37 @@ const Upload = () => {
   };
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+    <div className="relative bg-[#060707]">
       <Navbar />
-
-      <section className="main-section">
-        <div className="page-heading py-16">
-          <h1>Smart feedback for your dream job</h1>
+      <div className="items-center min-h-screen flex justify-around relative flex-wrap px-5">
+        <>
+          <div className="absolute -top-96 -left-96 w-[60rem] h-[50rem] bg-[#15fda0fd] rounded-full filter blur-[300px] opacity-50 -z-0"></div>
+          <div className="absolute -bottom-60 -right-40 w-[60rem] h-[50rem] bg-[#de3d19] rounded-full filter blur-[300px] opacity-20 -z-0"></div>
+        </>
+        <div className="max-w-xl relative">
+          <h1 className="font-IBMPlexBold text-6xl max-w-md text-left uppercase">
+            Get <span className="text-[#02C173]"> HIRED Faster </span> With
+            Intelligent FEEDBACK
+          </h1>
+          <p className="font-IBMPlexRegular text-left mb-8">
+            Drop your Resume for an ATS score and improvement tips
+          </p>
           {isProcessing ? (
             <>
               <h2>{statusText}</h2>
               <img src="/images/resume-scan.gif" className="w-full" />
             </>
           ) : (
-            <h2>Drop your resume for an ATS score and improvement tips</h2>
-          )}
-          {!isProcessing && (
             <form
               id="upload-form"
               onSubmit={handleSubmit}
               className="flex flex-col gap-4 mt-8"
             >
               <div className="form-div">
-                <label htmlFor="company-name" className="font-bold">
+                <label
+                  htmlFor="company-name"
+                  className="font-IBMPlexBold text-white"
+                >
                   Company Name
                 </label>
                 <input
@@ -122,10 +131,14 @@ const Upload = () => {
                   name="company-name"
                   placeholder="Company Name"
                   id="company-name"
+                  className="bg-gray-800 text-white"
                 />
               </div>
               <div className="form-div">
-                <label htmlFor="job-title" className="font-bold">
+                <label
+                  htmlFor="job-title"
+                  className="font-IBMPlexBold text-white"
+                >
                   Job Title
                 </label>
                 <input
@@ -133,29 +146,37 @@ const Upload = () => {
                   name="job-title"
                   placeholder="Job Title"
                   id="job-title"
+                  className="bg-gray-800 text-white"
                 />
               </div>
               <div className="form-div">
-                <label htmlFor="job-description" className="font-bold">
+                <label
+                  htmlFor="job-description"
+                  className="font-IBMPlexBold text-white"
+                >
                   Job Description
                 </label>
                 <textarea
                   rows={5}
                   name="job-description"
-                  placeholder="Job Description"
+                  placeholder="Write a clear & concise job description with responsibilities & expectation.."
                   id="job-description"
+                  className="bg-gray-800 text-white"
                 />
               </div>
 
               <div className="form-div">
-                <label htmlFor="uploader" className="font-bold">
+                <label
+                  htmlFor="uploader"
+                  className="font-IBMPlexBold text-white"
+                >
                   Upload Resume
                 </label>
                 <FileUploader onFileSelect={handleFileSelect} />
               </div>
 
               <button
-                className="btn btn-soft btn-accent w-full font-bold rounded-3xl"
+                className="btn btn-soft btn-accent w-full font-IBMPlexBold rounded-3xl"
                 type="submit"
               >
                 Analyze Resume
@@ -163,8 +184,8 @@ const Upload = () => {
             </form>
           )}
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 };
 export default Upload;

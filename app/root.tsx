@@ -21,7 +21,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap",
   },
   {
     rel: "stylesheet",
@@ -49,9 +49,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+          tailwind.config = {"{"}
+          theme: {"{"}
+          extend: {"{"}
+          fontFamily: {"{"}
+          IBMPlexBold: ["IBM Plex Sans", "sans-serif"], IBMPlexRegular: ["IBM
+          Plex Sans", "sans-serif"],
+          {"}"},{"}"},{"}"},{"}"}
+        </script>
       </head>
-      <body>
+      <body className="bg-[#060707] font-IBMPlexRegular">
         <script src="https://js.puter.com/v2/"></script>
         {children}
         <ScrollRestoration />
