@@ -155,7 +155,7 @@ const Upload = () => {
               </div>
 
               <button
-                className="btn btn-soft btn-accent w-full font-bold"
+                className="btn btn-soft btn-accent w-full font-bold rounded-3xl"
                 type="submit"
               >
                 Analyze Resume

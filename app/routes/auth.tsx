@@ -34,7 +34,7 @@ const Auth = () => {
               <>
                 {auth.isAuthenticated ? (
                   <button
-                    className="btn btn-soft btn-error"
+                    className="btn btn-soft btn-error w-full"
                     onClick={auth.signOut}
                   >
                     <p>Log Out</p>
