@@ -1,18 +1,20 @@
 import { Link } from "react-router";
 import { usePuterStore } from "~/lib/puter";
+import { Button } from "./ui/stateful-button";
 
 const Navbar = () => {
   const { auth } = usePuterStore();
 
   return (
-    <nav className="navbar flex justify-between items-center">
+    <nav className="navbar bg-base-100 shadow-sm">
       <Link to="/">
         <p className="text-2xl text-gradient font-bold">Resumind</p>
       </Link>
 
       <div className="flex gap-4 items-center">
-        <Link to="/upload" className="new-upload-button">
-          <span className="pr-[10px]">
+        <Button>
+        <Link to="/upload" className="">
+          {/* <span className="pr-[10px]">
             <svg
               width="20"
               height="20"
@@ -31,16 +33,14 @@ const Navbar = () => {
                 </clipPath>
               </defs>
             </svg>
-          </span>
+          </span> */}
           Upload resume
         </Link>
+        </Button>
 
-        <button
-          onClick={auth.signOut}
-          className="new-logout-button w-fit"
-        >
+        <Button onClick={auth.signOut} className="">
           Log Out
-        </button>
+        </Button>
       </div>
     </nav>
   );
