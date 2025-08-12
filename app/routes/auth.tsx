@@ -1,7 +1,7 @@
 import { usePuterStore } from "~/lib/puter";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import Navbar from "~/components/Navbar";
+import Navbar from "../components/Navbar";
 
 export const meta = () => [
   { title: "RESUMIND" },
