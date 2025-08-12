@@ -7,7 +7,7 @@ import Details from "~/components/Details";
 import Navbar from "~/components/Navbar";
 
 export const meta = () => [
-  { title: "Koala | Resume Review" },
+  { title: "Resume Review" },
   { name: "description", content: "Detailed overview of your resume" },
 ];
 

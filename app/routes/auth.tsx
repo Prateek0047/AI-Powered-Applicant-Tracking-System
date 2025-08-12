@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router";
 import Navbar from "~/components/Navbar";
 
 export const meta = () => [
-  { title: "Koala | Auth" },
+  { title: "RESUMIND" },
   { name: "description", content: "Log into your account" },
 ];
 

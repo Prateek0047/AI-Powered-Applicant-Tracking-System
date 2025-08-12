@@ -93,7 +93,7 @@ const Upload = () => {
   };
 
   return (
-    <div className="relative bg-[#060707]">
+    <div className="relative flex flex-col bg-[#060707] overflow-y-hidden overflow-x-hidden min-h-screen">
       <Navbar />
       <div className="items-center min-h-screen flex justify-around relative flex-wrap px-5">
         <>
